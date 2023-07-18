@@ -1,3 +1,4 @@
+---
 # Import the daily Open edX tracking logs to the ClickHouse using Ralph as a transformer from
 # json tracking log to a xAPI events.
 #

@@ -1,31 +1,27 @@
 ---
-- name: Copy script.sh to remote server
-  template:
-    src: templates/script.sh
-    dest: /path/to/remote/script.sh
-    mode: 0755
+- name: Create aspects-nau folder
+  hosts: localhost
+  gather_facts: false
+  become: true
 
-- name: Execute script.sh
-  shell: /path/to/remote/script.sh
-
-  # create a new file not using in line
+  tasks:
+    - name: Create the aspects-nau folder
+      file:
+        path: "{{ openedx_tutor_base_folder }}"
+        state: directory
+        mode: 0755
 
 - name: Generate config.yml file from template
   template:
-    src: templates/config.yml.j2
-    dest: /path/to/aspects-nau/config.yml
+    src: templates/config.yml
+    dest: "{{ openedx_tutor_base_folder }}/config.yml"
     mode: 0644
 
-# REMOVE MYSQL COMMANDS AND ADD TO README
-- name: Grant privileges to openedx user
-  mysql_user:
-    name: openedx
-    host: "<MYSQL_HOST>"
-    password: "<OPENEDX_MYSQL_PASSWORD>"
-    priv: "*.*:ALL,GRANT"
-    state: present
-  become: true
+- name: Copy script.sh to remote server
+  template:
+    src: templates/script.sh
+    dest: "{{ openedx_tutor_base_folder }}/script.sh"
+    mode: 0755
 
-- name: Flush privileges
-  command: mysql -h <MYSQL_HOST> -u root -p<MYSQL_ROOT_PASSWORD> -e "FLUSH PRIVILEGES;"
-  become: true
+- name: Execute script.sh
+  shell: "{{ openedx_tutor_base_folder }}/script.sh"

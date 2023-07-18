@@ -1,23 +1,51 @@
 ---
-
-# git clone
 - name: Clone import trackinglogs tool
   git:
-    repo: "{{ _import_trackinglogs_repo }}"
-    dest: "{{ _import_trackinglogs_base_directory }}"
-    version: "{{ _import_trackinglogs_version }}"
+    repo: "{{ import_trackinglogs_repo }}"
+    dest: "{{ import_trackinglogs_base_directory }}"
+    version: "{{ import_trackinglogs_version }}"
     force: yes
   when: "{{ openedx_aspects_import_tracking_logs_install }}"
 
-# virtualenv
-# when: "{{ openedx_aspects_import_tracking_logs_install }}"
-
-
-# variables generate an .env file.
 - template:
     src: config_env.j2
     dest: "{{ openedx_aspects_import_tracking_logs_config_env_path }}"
   when: "{{ openedx_aspects_import_tracking_logs_install }}"
 
-# activate && execute
-  # when: "{{ openedx_aspects_import_tracking_logs_run }}"
+- name: Install python3-venv,create virtual environment, install requirements.txt and run the script
+  hosts: localhost
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Install python3-venv package
+      apt:
+        name: python3-venv
+        state: present
+
+    - name: Create virtual environment
+      command: python3 -m venv /path/to/virtualenv
+
+    - name: Activate virtual environment
+      command: source /path/to/virtualenv/bin/activate
+
+    - name: Install requirements.txt
+      command: pip install -r requirements.txt
+
+    - name: Run the script
+      command: python s3_manager.py 
+
+  when: "{{ openedx_aspects_import_tracking_logs_install }}"
+
+- name: Install python3-venv, create virtual environment, install requirements.txt, and run the script
+  hosts: localhost
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Activate virtual environment
+      command: source /path/to/virtualenv/bin/activate
+
+    - name: Run the script
+      command: python /nau/ops/import-tracking-logs/s3_manager.py
+  when: "{{ openedx_aspects_import_tracking_logs_run }}"
+

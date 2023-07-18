@@ -31,10 +31,9 @@ Please run this commands before for already have the users on MYSQL
 
 The playbook performs the following tasks:
 
+1. **Copy script.sh to remote server**: Copies the `script.sh` template file to the remote server and sets the file permissions to 0755.
+2. **Execute script.sh**: Executes the `script.sh` file on the remote server.
 
-3. **Copy script.sh to remote server**: Copies the `script.sh` template file to the remote server and sets the file permissions to 0755.
-4. **Execute script.sh**: Executes the `script.sh` file on the remote server.
-
-5. **Generate config.yml file from template**: Generates the `config.yml` file using the `config.yml.j2` template. The variables in the template are loaded from the default values specified in the `defaults/main.yml` file.
+3. **Generate config.yml file from template**: Generates the `config.yml` file using the `config.yml.j2` template. The variables in the template are loaded from the default values specified in the `defaults/main.yml` file.
 
 

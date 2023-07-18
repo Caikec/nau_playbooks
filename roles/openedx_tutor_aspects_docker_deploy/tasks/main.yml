@@ -15,14 +15,6 @@
     src: templates/config.yml.j2
     dest: /path/to/aspects-nau/config.yml
     mode: 0644
-  vars:
-    MYSQL_HOST: "<MYSQL_HOST>"
-    MYSQL_ROOT_PASSWORD: "<MYSQL_ROOT_PASSWORD>"
-    MYSQL_ROOT_USERNAME: "<MYSQL_ROOT_USERNAME>"
-    RUN_MYSQL: "{{ false }}"
-    RUN_MONGODB: "{{ false }}"
-    RUN_ELASTICSEARCH: "{{ false }}"
-
 
 # REMOVE MYSQL COMMANDS AND ADD TO README
 - name: Grant privileges to openedx user

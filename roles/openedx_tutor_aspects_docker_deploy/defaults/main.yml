@@ -1,33 +1,17 @@
-# default variables
 ---
-
-# Add variables with an hash value.
-
-# Required variables:
-# TUTOR_MYSQL_HOST: 
-# TUTOR_OPENEDX_MYSQL_PASSWORD: 
-
-# TUTOR_CLICKHOUSE_PASSWORD: 
-
-openedx_tutor_tvm_version: 15.2
-
-openedx_tutor_plugin_aspects: 0.14.1
-
-
-openedx_tutor_base_folder: /nau/ops/openedx_tutor_aspects
-openedx_tutor_template_config_dest: "{{ openedx_tutor_base_folder }}/AAAA/config.yml"
-
-openedx_tutor_aspects_shell_script: "{{ openedx_tutor_base_folder }}/AAAA/aspects.sh"
-
-# We only put in ansible only the strictly needed variables and not all tutor config variables.
-# That is why we need to run tutor config save command.
-openedx_tutor_aspects_config: "{{ openedx_tutor_aspects_config_default | combine(openedx_tutor_aspects_config_overrides, recursive=True) }}"
-openedx_tutor_aspects_config_default:
-  OPENEDX_MYSQL_PASSWORD: "{{ TUTOR_OPENEDX_MYSQL_PASSWORD }}"
-  CLICKHOUSE_PASSWORD: "{{ TUTOR_CLICKHOUSE_PASSWORD }}"
-
-  # Run MySQL ?
-  MYSQL_HOST: "{{ TUTOR_MYSQL_HOST }}"
-
-
-openedx_tutor_aspects_config_overrides: {}
+MYSQL_HOST: "<MYSQL_HOST>"
+MYSQL_ROOT_PASSWORD: "<MYSQL_ROOT_PASSWORD>"
+MYSQL_ROOT_USERNAME: "<MYSQL_ROOT_USERNAME>"
+RUN_MYSQL: "{{ false }}"
+RUN_MONGODB: "{{ false }}"
+RUN_ELASTICSEARCH: "{{ false }}"
+CLICKHOUSE_ADMIN_USER: "<CLICKHOUSE_ADMIN_USER>"
+CLICKHOUSE_ADMIN_PASSWORD: "<CLICKHOUSE_ADMIN_PASSWORD>"
+OPENEDX_MYSQL_PASSWORD: "<OPENEDX_MYSQL_PASSWORD>"
+OPENEDX_SECRET_KEY: "<OPENEDX_SECRET_KEY>"
+SUPERSET_ADMIN_USERNAME: "<SUPERSET_ADMIN_USERNAME>"
+SUPERSET_ADMIN_PASSWORD: "<SUPERSET_ADMIN_PASSWORD>"
+SUPERSET_DB_PASSWORD: "<SUPERSET_DB_PASSWORD>"
+SUPERSET_OAUTH2_CLIENT_ID: "<SUPERSET_OAUTH2_CLIENT_ID>"
+SUPERSET_OAUTH2_CLIENT_ID_DEV: "<SUPERSET_OAUTH2_CLIENT_ID_DEV>"
+SUPERSET_OAUTH2_CLIENT_SECRET: "<SUPERSET_OAUTH2_CLIENT_SECRET>"

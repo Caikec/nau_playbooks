@@ -13,6 +13,12 @@ source /path/to/tvm/aspects-nau/.tvm/bin/activate
 
 pip install git+https://github.com/openedx/tutor-contrib-aspects
 
+pip install --upgrade tutor[full]
+
+tutor plugins enable aspects
+
+tutor config save
+
 tutor images build openedx
 
 tutor dev do init

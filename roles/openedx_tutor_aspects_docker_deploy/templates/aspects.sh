@@ -1,10 +1,18 @@
+#!/bin/bash
+set -e
 
-# Inspire on:
-# https://github.com/fccn/nau-tutor-configs/blob/main/bin/run
+apt-get install -y python3-venv
 
-# - tvm
-# - init tvm
-# - tvm activate
-# - install tutor plugins for aspects
-# - enable tutor plugins
-# - tutor local ...
+python3 -m venv /path/to/virtualenv
+source /path/to/virtualenv/bin/activate
+pip install git+https://github.com/eduNEXT/tvm.git
+
+tvm project init aspects-nau v15.3.5
+cd /path/to/tvm/aspects-nau
+source /path/to/tvm/aspects-nau/.tvm/bin/activate
+
+pip install git+https://github.com/openedx/tutor-contrib-aspects
+
+tutor images build openedx
+
+tutor dev do init

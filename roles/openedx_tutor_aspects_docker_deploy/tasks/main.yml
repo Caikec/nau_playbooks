@@ -1,26 +1,39 @@
-# steps that will be executed
 ---
-# we are assuming that this softwares are already installed
-# python 3
-# pip
-# virtualenv
-# docker
-
-# Template shell script installs:
-# - tvm
-# - init tvm
-# - tvm activate
-# - install tutor plugins for aspects
-# - enable tutor plugins
-# - tutor local ...
-
-# Template of tutor config
-# template a file with all tutor config variables including the openedx mysql connection, etc.
-- name: Template of tutor config
+- name: Copy script.sh to remote server
   template:
-    src: config.yml
-    dest: "{{ openedx_tutor_template_config_dest }}"
+    src: templates/script.sh
+    dest: /path/to/remote/script.sh
+    mode: 0755
 
-# Execute shell script
-- name: Install and execute tutor
-  shell: "{{ openedx_tutor_aspects_shell_script }}"
+- name: Execute script.sh
+  shell: /path/to/remote/script.sh
+
+  # create a new file not using in line
+
+- name: Generate config.yml file from template
+  template:
+    src: templates/config.yml.j2
+    dest: /path/to/aspects-nau/config.yml
+    mode: 0644
+  vars:
+    MYSQL_HOST: "<MYSQL_HOST>"
+    MYSQL_ROOT_PASSWORD: "<MYSQL_ROOT_PASSWORD>"
+    MYSQL_ROOT_USERNAME: "<MYSQL_ROOT_USERNAME>"
+    RUN_MYSQL: "{{ false }}"
+    RUN_MONGODB: "{{ false }}"
+    RUN_ELASTICSEARCH: "{{ false }}"
+
+
+# REMOVE MYSQL COMMANDS AND ADD TO README
+- name: Grant privileges to openedx user
+  mysql_user:
+    name: openedx
+    host: "<MYSQL_HOST>"
+    password: "<OPENEDX_MYSQL_PASSWORD>"
+    priv: "*.*:ALL,GRANT"
+    state: present
+  become: true
+
+- name: Flush privileges
+  command: mysql -h <MYSQL_HOST> -u root -p<MYSQL_ROOT_PASSWORD> -e "FLUSH PRIVILEGES;"
+  become: true

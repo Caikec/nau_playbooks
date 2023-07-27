@@ -24,10 +24,10 @@
         state: present
 
     - name: Create virtual environment
-      command: python3 -m venv /path/to/virtualenv
+      command: python3 -m venv {{ virtual_environment_path }}
 
     - name: Activate virtual environment
-      command: source /path/to/virtualenv/bin/activate
+      command: source {{ virtual_environment_path }}/bin/activate
 
     - name: Install requirements.txt
       command: pip install -r requirements.txt
@@ -43,7 +43,7 @@
   become: true
   tasks:
     - name: Activate virtual environment
-      command: source /path/to/virtualenv/bin/activate
+      command: source {{ virtual_environment_path }}/bin/activate
 
     - name: Run the script
       command: python /nau/ops/import-tracking-logs/s3_manager.py
